@@ -29,29 +29,29 @@ public class PetstoreTest {
 		pet.setPhotoUrls(photoUrls);
 		pet.setName("loki");
 		//pet.setId(System.currentTimeMillis()+"");
-    	Response response = given()
-		        .contentType(ContentType.JSON)
-		        .body(pet,ObjectMapperType.GSON)
-		        .when()
-		        .post("/pet")
-		        .then()
-		        .extract().response();    	
-    	Assertions.assertEquals(200, response.statusCode());       
-    	String petId = response.jsonPath().getString("id");
-    	Response response2 = given()          
-    			.accept(ContentType.JSON)
-                .when()
-                .get("/pet/{petId}",petId)
-                .then()
-                .extract().response();
-    	Assertions.assertEquals(200, response2.statusCode());
-    	Assertions.assertEquals("loki", response2.jsonPath().getString("name"));    	
-    	Response response3 = given()
-    			.accept(ContentType.JSON)
-                .when()
-                .delete("/pet/{petId}",petId)
-                .then()
-                .extract().response();
+		Response response = given()
+				.contentType(ContentType.JSON)
+				.body(pet, ObjectMapperType.GSON)
+				.when()
+				.post("/pet")
+				.then()
+				.extract().response();
+		Assertions.assertEquals(200, response.statusCode());
+		String petId = response.jsonPath().getString("id");
+		Response response2 = given()
+				.accept(ContentType.JSON)
+				.when()
+				.get("/pet/{petId}", petId)
+				.then()
+				.extract().response();
+		Assertions.assertEquals(200, response2.statusCode());
+		Assertions.assertEquals("loki", response2.jsonPath().getString("name"));
+		Response response3 = given()
+				.accept(ContentType.JSON)
+				.when()
+				.delete("/pet/{petId}", petId)
+				.then()
+				.extract().response();
 		Assertions.assertEquals(200, response3.statusCode());
 	}
 }
